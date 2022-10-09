@@ -1,0 +1,40 @@
+name: Deploy dev
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install Serverless
+      run: npm i -g serverless
+
+    - name: Install Credencials
+      run: sls config credentials -p aws -k ${{ secrets.AWS_ACCESS_KEY_ID_DEV }} -s ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+
+    - name: Install dependencies
+      run: npm i
+
+    - name: Deploy to AWS
+      run: sls deploy --verbose
+      env:
+        CI: false

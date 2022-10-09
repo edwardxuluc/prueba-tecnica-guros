@@ -1,0 +1,68 @@
+service: validar-adn
+plugins:
+  - serverless-plugin-include-dependencies
+  - serverless-pseudo-parameters
+
+package:
+  exclude:
+    - node_modules/**
+
+custom:
+  settings:
+    CONSULTAR_GUARDADOS: 0
+    TABLA_DYNAMODB: REGISTRO_ADN
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  tracing:
+    lambda: true
+  stage: ${opt:stage,'pruebas'}
+  environment: ${self:custom.settings}
+  timeout: 30
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.settings.TABLA_DYNAMODB}"
+
+functions:
+    validar-adn:
+      handler: handler/validar.handler
+      name: ${self:service}-validar
+      events:
+        - http:
+            path: v1/mutation
+            method: post
+            cors: true
+    estadisticas:
+      handler: handler/estadisticas.handler
+      name: ${self:service}-estadisticas
+      events:
+        - http:
+            path: v1/stats
+            method: get
+            cors: true
+
+resources:
+    Resources:
+      CategoriaDynamoDbTable:
+        Type: 'AWS::DynamoDB::Table'
+        DeletionPolicy: Retain
+        Properties:
+          AttributeDefinitions:
+            -
+              AttributeName: id
+              AttributeType: S
+          KeySchema:
+            -
+              AttributeName: id
+              KeyType: HASH
+          ProvisionedThroughput:
+            ReadCapacityUnits:  1
+            WriteCapacityUnits:  1
+          TableName: ${self:custom.settings.TABLA_DYNAMODB}
