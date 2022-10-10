@@ -103,6 +103,6 @@ npm test
 # instalar las dependencias
 npm i
 
-# correr las pruebas
+# ejecutar el deploy
 sls deploy
 ```
