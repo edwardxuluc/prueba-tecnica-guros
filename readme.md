@@ -68,6 +68,19 @@ Este software esta construido con las siguientes tecnologias:
         "TCACTG"
     ]
 }
+
+
+// mutacion 4
+{
+    "dna": [
+        "ATGTTA",
+        "CAGAAC",
+        "GAAACG",
+        "AGAAGG",
+        "GTTATA",
+        "TCACTG"
+    ]
+}
 ```
 
 
