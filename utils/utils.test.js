@@ -1,4 +1,4 @@
-const { validarEstructuraMatriz, encontrarMutacionCadena, encontrarMutacionMatrizHorizontal, generarMatrizVertical, generarMatrizOblicuaIzq, encontrarMutaciones, calcularRatio } = require('./utils');
+const { validarEstructuraMatriz, encontrarMutacionCadena, encontrarMutacionMatrizHorizontal, generarMatrizVertical, generarMatrizOblicuaIzqDer, generarMatrizOblicuaDerIzq, encontrarMutaciones, calcularRatio } = require('./utils');
 
 test('Validar matriz | matriz vacia', () => {
     let matriz = [
@@ -106,7 +106,7 @@ test('Generar matriz obliqua | izq-der | 4X4 ', () => {
         'ACGT',
         'ACGT',
     ];
-    expect(generarMatrizOblicuaIzq(matriz)).toEqual([
+    expect(generarMatrizOblicuaIzqDer(matriz)).toEqual([
         'ACGT'
     ]);
 });
@@ -122,7 +122,7 @@ test('Generar matriz obliqua | izq-der | 8x8 ', () => {
         'AACCGGTT',
         'AACCGGTT',
     ];
-    expect(generarMatrizOblicuaIzq(matriz)).toEqual([
+    expect(generarMatrizOblicuaIzqDer(matriz)).toEqual([
         'AACCGGTT',
         'ACCGGTT',
         'CCGGTT',
@@ -132,6 +132,42 @@ test('Generar matriz obliqua | izq-der | 8x8 ', () => {
         'AACCGG',
         'AACCG',
         'AACC',
+    ]);
+});
+
+test('Generar matriz obliqua | der-izq | 4X4 ', () => {
+    let matriz = [
+        'ACGT',
+        'ACGT',
+        'ACGT',
+        'ACGT',
+    ];
+    expect(generarMatrizOblicuaDerIzq(matriz)).toEqual([
+        'TGCA'
+    ]);
+});
+
+test('Generar matriz obliqua | izq-der | 8x8 ', () => {
+    let matriz = [
+        'AACCGGTT',
+        'AACCGGTT',
+        'AACCGGTT',
+        'AACCGGTT',
+        'AACCGGTT',
+        'AACCGGTT',
+        'AACCGGTT',
+        'AACCGGTT',
+    ];
+    expect(generarMatrizOblicuaDerIzq(matriz)).toEqual([
+        'TTGGCCAA',
+        'TGGCCAA',
+        'GGCCAA',
+        'GCCAA',
+        'CCAA',
+        'TTGGCCA',
+        'TTGGCC',
+        'TTGGC',
+        'TTGG',
     ]);
 });
 
