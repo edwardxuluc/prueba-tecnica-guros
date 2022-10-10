@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "e955270d-70f9-4f05-a3a4-d7081d0db5bb",
+		"name": "mutations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19023398"
+	},
+	"item": [
+		{
+			"name": "mutation - 200",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dna\": [\r\n        \"ATGTTA\",\r\n        \"CAGAAC\",\r\n        \"GAAACG\",\r\n        \"AGAAGG\",\r\n        \"GTTATA\",\r\n        \"TCACTG\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://97jj7a7x5j.execute-api.us-east-1.amazonaws.com/pruebas/v1/mutation",
+					"protocol": "https",
+					"host": [
+						"97jj7a7x5j",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"pruebas",
+						"v1",
+						"mutation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation  - 403",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dna\": [\r\n        \"ATGCGA\",\r\n        \"CAGTGC\",\r\n        \"TTATTT\",\r\n        \"AGACGG\",\r\n        \"GCGTCA\",\r\n        \"TCACTG\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://97jj7a7x5j.execute-api.us-east-1.amazonaws.com/pruebas/v1/mutation",
+					"protocol": "https",
+					"host": [
+						"97jj7a7x5j",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"pruebas",
+						"v1",
+						"mutation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://97jj7a7x5j.execute-api.us-east-1.amazonaws.com/pruebas/v1/stats",
+					"protocol": "https",
+					"host": [
+						"97jj7a7x5j",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"pruebas",
+						"v1",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
