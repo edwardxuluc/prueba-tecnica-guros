@@ -37,15 +37,15 @@ const generarMatrizVertical = (matriz) => {
 };
 
 // generar una matriz utilizando las diagonales
-const generarMatrizOblicuaIzq = (matriz) => {
+const generarMatrizOblicuaIzqDer = (matriz) => {
     let strings_obliquas = [];
 
     // recorer primera fila
     for (let i = 0; i < matriz.length; i++) {
 
+        let nuevo_string = '';
         let x = 0;
         let y = i;
-        let nuevo_string = '';
 
         for (let j = 0; j < matriz.length; j++) {
             if (matriz[x] && matriz[x][y]) {
@@ -55,11 +55,9 @@ const generarMatrizOblicuaIzq = (matriz) => {
             x++;
             y++;
         }
-        if (nuevo_string.length > 3) {
-            strings_obliquas.push(nuevo_string);
-        } else {
-            break;
-        }
+
+        if( nuevo_string.length < 4 ) break;
+        strings_obliquas.push(nuevo_string);
     }
 
     // recorer primera columna
@@ -70,9 +68,9 @@ const generarMatrizOblicuaIzq = (matriz) => {
             continue;
         }
 
+        let nuevo_string = '';
         let x = i;
         let y = 0;
-        let nuevo_string = '';
 
         for (let j = 0; j < matriz.length; j++) {
             if (matriz[x] && matriz[x][y]) {
@@ -83,15 +81,58 @@ const generarMatrizOblicuaIzq = (matriz) => {
             y++;
         }
 
-        if (nuevo_string.length > 3) {
-            strings_obliquas.push(nuevo_string);
-        } else {
-            break;
-        }
+        if (nuevo_string.length < 4) break;
+        strings_obliquas.push(nuevo_string);
     }
 
     return strings_obliquas;
 };
+
+// generar una matriz utilizando las diagonales
+const generarMatrizOblicuaDerIzq = (matriz) => {
+    let strings_obliquas = [];
+
+    for (let i = 0; i < matriz.length; i++) {
+
+        let nuevo_string = '';
+        let x = (matriz.length - 1) - i;
+        let y = 0;
+
+        for (let j = 0; j < matriz.length; j++) {
+            if( matriz[y] && matriz[y][x] ){
+                nuevo_string += matriz[y][x];
+            }
+
+            x--;
+            y++;
+        }
+
+        if (nuevo_string.length < 4) break;
+        strings_obliquas.push(nuevo_string);
+    }
+
+    for (let i = 0; i < matriz.length; i++) {
+
+        let nuevo_string = '';
+        let x = (matriz.length - 1);
+        let y = 1 + i;
+
+        for (let j = 0; j < matriz.length; j++) {
+            if( matriz[y] && matriz[y][x] ){
+                nuevo_string += matriz[y][x];
+            }
+
+            x--;
+            y++;
+        }
+
+        if (nuevo_string.length < 4) break;
+        strings_obliquas.push(nuevo_string);
+    }
+
+    return strings_obliquas;
+};
+
 
 // valida si una cadena tiene 4 caracteres seguidos
 const encontrarMutacionCadena = (cadena,) => {
@@ -121,8 +162,6 @@ const encontrarMutaciones = (matriz) => {
         return true;
     }
 
-    console.log('--------------1', mutaciones_encontradas);
-
     // 2. buscar verticalmente, generando una matriz con las columnas
     let matriz_vertical = generarMatrizVertical(matriz);
     mutaciones_encontradas += encontrarMutacionMatrizHorizontal(matriz_vertical);
@@ -130,16 +169,19 @@ const encontrarMutaciones = (matriz) => {
         return true;
     }
 
-    console.log('--------------2', mutaciones_encontradas);
-
     // 3. buscar oblicuamente, generando una matriz con las diagonales
-    let matriz_oblicua = generarMatrizOblicuaIzq(matriz);
-    mutaciones_encontradas += encontrarMutacionMatrizHorizontal(matriz_oblicua);
+    let matriz_oblicua_izq_der = generarMatrizOblicuaIzqDer(matriz);
+    mutaciones_encontradas += encontrarMutacionMatrizHorizontal(matriz_oblicua_izq_der);
     if (mutaciones_encontradas >= 2) {
         return true;
     }
 
-    console.log('--------------3', mutaciones_encontradas);
+    // 3. buscar oblicuamente, generando una matriz con las diagonales
+    let matriz_oblicua_der_izq = generarMatrizOblicuaIzqDer(matriz);
+    mutaciones_encontradas += encontrarMutacionMatrizHorizontal(matriz_oblicua_der_izq);
+    if (mutaciones_encontradas >= 2) {
+        return true;
+    }
 
     return false;
 };
@@ -156,7 +198,19 @@ module.exports = {
     encontrarMutacionCadena,
     encontrarMutacionMatrizHorizontal,
     generarMatrizVertical,
-    generarMatrizOblicuaIzq,
+    generarMatrizOblicuaIzqDer,
+    generarMatrizOblicuaDerIzq,
     encontrarMutaciones,
     calcularRatio,
 }
+
+//     let entrada = [
+//     'AACC',
+//     'AACC',
+//     'AACC',
+//     'AACC',
+//     ];
+//     imprimirMatriz('entrada', entrada);
+//     let salida = generarMatrizOblicuaDerIzq(entrada);
+//     imprimirMatriz('salida', salida);
+// })();
